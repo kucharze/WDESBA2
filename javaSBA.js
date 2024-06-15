@@ -107,17 +107,23 @@ const LearnerSubmissions = [
 ];
 
 function grabImportantAssignmentInfo() {
+  let ids = [];
   let possiblePoints = [];
   let dueDates = [];
 
   AssignmentGroup.assignments.forEach((el) => {
+    id.push(el.id);
     possiblePoints.push(el.points_possible);
     dueDates.push(el.due_at);
   });
 
-  return [possiblePoints, dueDates];
+  return [ids, possiblePoints, dueDates];
 }
 
 function grabLearnerScores() {
   let scores = [];
+
+  LearnerSubmissions.forEach((element) => {});
 }
+
+let assignementInfo = getImportantAssignmentInfo();
