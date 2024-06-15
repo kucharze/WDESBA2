@@ -169,6 +169,9 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
   let studentClassScores = [];
 
   try {
+    if (CourseInfo.id !== AssignmentGroup.course_id) {
+      throw new Error("Course ID Mismatch");
+    }
     let assignementInfo = grabImportantAssignmentInfo(AssignmentGroup);
 
     for (let i = 0; i < LearnerSubmissions.length; i++) {
@@ -260,7 +263,8 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
 
     return studentClassScores;
   } catch (error) {
-    console.log("An error occured", error);
+    console.log("An error occured", error.message);
+    return "Error";
   }
 };
 
