@@ -106,10 +106,10 @@ const LearnerSubmissions = [
   },
 ];
 
-function getAllPoints() {
+function getPossiblePoints() {
   let possiblePoints = [];
 }
 
-function grabScores() {
+function grabLearnerScores() {
   let scores = [];
 }
