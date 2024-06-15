@@ -126,4 +126,7 @@ function grabLearnerScores() {
   LearnerSubmissions.forEach((element) => {});
 }
 
+//The final set of score results
+let studentClassScores = [];
+
 let assignementInfo = getImportantAssignmentInfo();
