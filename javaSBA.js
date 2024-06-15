@@ -188,16 +188,20 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
         //Assignment is not due yet, ignore it
       } else {
         //The assignment is due, see if its on time
-        if (assignment[1] == "Late") {
-        } else {
-        }
-
         studentClassScores[spot].possiblePoints += assignment[0];
-        studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
-          LearnerSubmissions[i].submission.score;
+        if (assignment[1] == "Late") {
+          studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
+            LearnerSubmissions[i].submission.score - 15;
 
-        studentClassScores[spot].scored +=
-          LearnerSubmissions[i].submission.score;
+          studentClassScores[spot].scored +=
+            LearnerSubmissions[i].submission.score - 15;
+        } else {
+          studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
+            LearnerSubmissions[i].submission.score;
+
+          studentClassScores[spot].scored +=
+            LearnerSubmissions[i].submission.score;
+        }
       }
     } else {
       // console.log("Found nothing");
@@ -218,16 +222,20 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
         //add to student array result
 
         if (assignment[1] == "Late") {
+          student[LearnerSubmissions[i].assignment_id] =
+            LearnerSubmissions[i].submission.score - 15;
+
+          student.scored = LearnerSubmissions[i].submission.score - 15;
+          student.possiblePoints = assignment[0];
         } else {
+          student[LearnerSubmissions[i].assignment_id] =
+            LearnerSubmissions[i].submission.score;
+
+          student.scored = LearnerSubmissions[i].submission.score;
+          student.possiblePoints = assignment[0];
         }
 
-        student[LearnerSubmissions[i].assignment_id] =
-          LearnerSubmissions[i].submission.score;
-
-        student.scored = LearnerSubmissions[i].submission.score;
-
         studentClassScores.push(student);
-        student.possiblePoints = assignment[0];
       }
     }
   }
