@@ -119,6 +119,10 @@ function grabImportantAssignmentInfo(assignementInfo) {
         "A value less than or equal to 0 was detected for a possible point value"
       );
     }
+    console.log(typeof el.points_possible);
+    if (typeof el.points_possible !== "number") {
+      throw new Error("Points value should be a number");
+    }
     possiblePoints.push(el.points_possible);
     dueDates.push(el.due_at);
   });
@@ -222,11 +226,9 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
           studentClassScores[spot][LearnerSubmissions[i].assignment_id] /=
             assignment[0];
 
-          // Math.round(
-          studentClassScores[spot][LearnerSubmissions[i].assignment_id].toFixed(
-            2
-          );
-          // );
+          //   Math.round(
+          //     studentClassScores[spot][LearnerSubmissions[i].assignment_id] * 100
+          //   ) / 100;
         }
       } else {
         // New Learner
