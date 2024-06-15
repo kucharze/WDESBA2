@@ -108,6 +108,12 @@ const LearnerSubmissions = [
 
 function getPossiblePoints() {
   let possiblePoints = [];
+
+  AssignmentGroup.assignments.forEach((el) => {
+    possiblePoints.push(possiblePoints);
+  });
+
+  return possiblePoints;
 }
 
 function grabLearnerScores() {
