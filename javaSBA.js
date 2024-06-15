@@ -209,19 +209,17 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
         if (assignment !== -0) {
           //The assignment is due, see if its on time
           studentClassScores[spot].possiblePoints += assignment[0];
+
+          let lateScore = 0;
           if (assignment[1] == "Late") {
-            studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
-              LearnerSubmissions[i].submission.score - 15;
-
-            studentClassScores[spot].scored +=
-              LearnerSubmissions[i].submission.score - 15;
-          } else {
-            studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
-              LearnerSubmissions[i].submission.score;
-
-            studentClassScores[spot].scored +=
-              LearnerSubmissions[i].submission.score;
+            lateScore = 15;
           }
+          studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
+            LearnerSubmissions[i].submission.score - lateScore;
+
+          studentClassScores[spot].scored +=
+            LearnerSubmissions[i].submission.score - lateScore;
+
           studentClassScores[spot][LearnerSubmissions[i].assignment_id] /=
             assignment[0];
 
@@ -251,19 +249,21 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
           //The assignment is due, see if its on time
           //add to student array result
 
+          let lateScore = 0;
           if (assignment[1] == "Late") {
+            lateScore = 15;
             student[LearnerSubmissions[i].assignment_id] =
-              LearnerSubmissions[i].submission.score - 15;
+              LearnerSubmissions[i].submission.score - lateScore;
 
-            student.scored = LearnerSubmissions[i].submission.score - 15;
-            student.possiblePoints = assignment[0];
-          } else {
-            student[LearnerSubmissions[i].assignment_id] =
-              LearnerSubmissions[i].submission.score;
-
-            student.scored = LearnerSubmissions[i].submission.score;
+            student.scored = LearnerSubmissions[i].submission.score - lateScore;
             student.possiblePoints = assignment[0];
           }
+
+          student[LearnerSubmissions[i].assignment_id] =
+            LearnerSubmissions[i].submission.score;
+
+          student.scored = LearnerSubmissions[i].submission.score;
+          student.possiblePoints = assignment[0];
 
           student[LearnerSubmissions[i].assignment_id] /= assignment[0];
 
