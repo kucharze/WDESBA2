@@ -144,17 +144,18 @@ const findAssignment = (assignementInfo, id, submitted) => {
       let dueDate = new Date(assignementInfo[2][i]);
       if (dueDate < Date.now()) {
         if (submitted > dueDate) {
-          //late
+          //Assignment submitted late
           console.log("late");
           return [assignementInfo[1][i], "Late"];
         } else {
-          //ontime
+          //Assignemnt submitteed ontime
           console.log("Ontime");
           return [assignementInfo[1][i], "on Time"];
         }
       }
     }
   }
+  //Assignment is not due yet
   console.log("Not due");
   return "Not Due";
 };
