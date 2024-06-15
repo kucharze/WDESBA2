@@ -150,51 +150,84 @@ const findAssignment = (assignementInfo, id, submitted) => {
         } else {
           //Assignemnt submitteed ontime
           console.log("Ontime");
-          return [assignementInfo[1][i], "on Time"];
+          return [assignementInfo[1][i], "On Time"];
         }
       }
     }
   }
   //Assignment is not due yet
-  console.log("Not due");
+  //   console.log("Not due");
   return "Not Due";
 };
 
-let studentClassScores = [];
+const getLearnerData = (CourseInfo,AssignmentGroup, LearnerSubmissions){
+    let studentClassScores = [];
 
-let assignementInfo = grabImportantAssignmentInfo();
+    let assignementInfo = grabImportantAssignmentInfo();
 
-for (let i = 0; i < LearnerSubmissions.length; i++) {
-  let student = {};
+    for (let i = 0; i < LearnerSubmissions.length; i++) {
+    let student = {};
 
-  let spot = checkContainment(
-    studentClassScores,
-    LearnerSubmissions[i].learner_id
-  );
+    let spot = checkContainment(
+        studentClassScores,
+        LearnerSubmissions[i].learner_id
+    );
 
-  if (spot !== -1) {
-    // console.log("New assignment");
-    // console.log(LearnerSubmissions[i].assignment_id);
+    if (spot !== -1) {
+        // console.log("New assignment");
+        // console.log(LearnerSubmissions[i].assignment_id);
 
-    studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
-      LearnerSubmissions[i].submission.score;
+        let assignment = findAssignment(
+        assignementInfo,
+        LearnerSubmissions[i].assignment_id,
+        LearnerSubmissions[i].submission.submitted_at
+        );
+        console.log("assignment return", assignment);
 
-    studentClassScores[spot].scored += LearnerSubmissions[i].submission.score;
-  } else {
-    // console.log("Found nothing");
+        if (assignment == "Not Due") {
+        //Assignment is not due yet, ignore it
+        } else {
+        //The assignment is due, see if its on time
+        studentClassScores[spot].possiblePoints += assignment[0];
+        }
 
-    student.id = LearnerSubmissions[i].learner_id;
-    student[LearnerSubmissions[i].assignment_id] =
-      LearnerSubmissions[i].submission.score;
+        studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
+        LearnerSubmissions[i].submission.score;
 
-    student.scored = LearnerSubmissions[i].submission.score;
+        studentClassScores[spot].scored += LearnerSubmissions[i].submission.score;
+    } else {
+        // console.log("Found nothing");
+        // New Learner
 
-    studentClassScores.push(student);
-  }
+        student.id = LearnerSubmissions[i].learner_id;
+        let assignment = findAssignment(
+        assignementInfo,
+        LearnerSubmissions[i].assignment_id,
+        LearnerSubmissions[i].submission.submitted_at
+        );
+        console.log("assignment return", assignment);
+
+        if (assignment == "Not Due") {
+        //Assignment is not due yet, ignore it
+        } else {
+        //The assignment is due, see if its on time
+        student.possiblePoints = assignment[0];
+        }
+
+        //add to student array result
+        student[LearnerSubmissions[i].assignment_id] =
+        LearnerSubmissions[i].submission.score;
+
+        student.scored = LearnerSubmissions[i].submission.score;
+
+        studentClassScores.push(student);
+    }
+    }
+
+    console.log(findAssignment(assignementInfo, 2, new Date("2023-03-01")));
+
+    console.log(studentClassScores);
+    // let d = new Date(AssignmentGroup.assignments[0].due_at);
+    // console.log(d);
+
 }
-
-findAssignment(assignementInfo, 3, new Date("2023-01-01"));
-
-console.log(studentClassScores);
-// let d = new Date(AssignmentGroup.assignments[0].due_at);
-// console.log(d);
