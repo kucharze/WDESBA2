@@ -138,13 +138,25 @@ const calculateScores = (score, total) => {
   return score / total;
 };
 
-const findAssignment = (assignementInfo, id) => {
+const findAssignment = (assignementInfo, id, submitted) => {
   for (let i = 0; i < assignementInfo[0].length; i++) {
     if (assignementInfo[0][i] == id) {
-      if (new Date(assignementInfo[2][i]) < Date.now()) {
+      let dueDate = new Date(assignementInfo[2][i]);
+      if (dueDate < Date.now()) {
+        if (submitted > dueDate) {
+          //late
+          console.log("late");
+          return [assignementInfo[1][i], "Late"];
+        } else {
+          //ontime
+          console.log("Ontime");
+          return [assignementInfo[1][i], "on Time"];
+        }
       }
     }
   }
+  console.log("Not due");
+  return "Not Due";
 };
 
 let studentClassScores = [];
@@ -180,7 +192,7 @@ for (let i = 0; i < LearnerSubmissions.length; i++) {
   }
 }
 
-findAssignment(assignementInfo);
+findAssignment(assignementInfo, 3, new Date("2023-01-01"));
 
 console.log(studentClassScores);
 // let d = new Date(AssignmentGroup.assignments[0].due_at);
