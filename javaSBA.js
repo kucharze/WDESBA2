@@ -195,6 +195,9 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
         LearnerSubmissions[i].learner_id
       );
 
+      if (typeof LearnerSubmissions[i].submission.score !== "number") {
+        throw new Error("Score should be a number");
+      }
       if (spot !== -1) {
         // "New assignment"
 
