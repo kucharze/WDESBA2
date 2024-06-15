@@ -133,8 +133,6 @@ function checkContainment(scores, id) {
 }
 
 const calculateScores = (score, total) => {
-  let i = 0;
-
   return score / total;
 };
 
