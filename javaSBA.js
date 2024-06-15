@@ -128,12 +128,24 @@ function grabImportantAssignmentInfo() {
 // }
 
 //The final set of score results
+
+function checkContainment(scores, id) {
+  for (let i = 0; i < scores.length; i++) {
+    if (scores.id === id) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
 let studentClassScores = [];
 
 let assignementInfo = grabImportantAssignmentInfo();
 
 for (let i = 0; i < LearnerSubmissions.length; i++) {
   let student = {};
+
   student.id = LearnerSubmissions[i].learner_id;
   student[LearnerSubmissions[i].assignment_id] =
     LearnerSubmissions[i].submission.score;
