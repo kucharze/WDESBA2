@@ -153,11 +153,15 @@ const findAssignment = (assignementInfo, id, submitted) => {
           //   console.log("On Time");
           return [assignementInfo[1][i], "On Time"];
         }
+      } else {
+        //Assignment is not due yet
+        //   console.log("Not due");
+        return 0;
       }
     }
   }
   //Assignment is not due yet
-  //   console.log("Not due");
+  //error
   return -1;
 };
 
@@ -198,7 +202,11 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
         );
         console.log("assignment return", assignment);
 
-        if (assignment !== -1) {
+        if (assignment == -1) {
+          throw new Error("Assignment not found");
+        }
+
+        if (assignment !== -0) {
           //The assignment is due, see if its on time
           studentClassScores[spot].possiblePoints += assignment[0];
           if (assignment[1] == "Late") {
@@ -235,7 +243,11 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
         );
         console.log("assignment return", assignment);
 
-        if (assignment != -1) {
+        if (assignment == -1) {
+          throw new Error("Assignment not found");
+        }
+
+        if (assignment != -0) {
           //The assignment is due, see if its on time
           //add to student array result
 
