@@ -129,9 +129,15 @@ function grabImportantAssignmentInfo() {
 //The final set of score results
 let studentClassScores = [];
 
-let assignementInfo = getImportantAssignmentInfo();
+let assignementInfo = grabImportantAssignmentInfo();
 
 for (let i = 0; i < LearnerSubmissions.length; i++) {
   let student = {};
-  student.id = el.id;
+  student.id = LearnerSubmissions[i].id;
+  student[LearnerSubmissions[i].assignment_id] =
+    LearnerSubmissions[i].submission.score;
+
+  studentClassScores.push(student);
 }
+
+console.log(studentClassScores);
