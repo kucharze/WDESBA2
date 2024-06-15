@@ -113,3 +113,7 @@ function getPossiblePoints() {
 function grabLearnerScores() {
   let scores = [];
 }
+
+function grabDueDates() {
+  let dueDates = [];
+}
