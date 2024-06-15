@@ -140,6 +140,8 @@ const findAssignment = (assignementInfo, id, submitted) => {
   for (let i = 0; i < assignementInfo[0].length; i++) {
     if (assignementInfo[0][i] == id) {
       let dueDate = new Date(assignementInfo[2][i]);
+      //   console.log("Duedate", dueDate);
+      //   console.log("Submitted", submitted);
       if (dueDate < Date.now()) {
         if (submitted > dueDate) {
           //Assignment submitted late
@@ -178,7 +180,7 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
       let assignment = findAssignment(
         assignementInfo,
         LearnerSubmissions[i].assignment_id,
-        LearnerSubmissions[i].submission.submitted_at
+        new Date(LearnerSubmissions[i].submission.submitted_at)
       );
       console.log("assignment return", assignment);
 
@@ -201,7 +203,7 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
       let assignment = findAssignment(
         assignementInfo,
         LearnerSubmissions[i].assignment_id,
-        LearnerSubmissions[i].submission.submitted_at
+        new Date(LearnerSubmissions[i].submission.submitted_at)
       );
       console.log("assignment return", assignment);
 
