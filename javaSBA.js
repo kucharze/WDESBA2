@@ -106,12 +106,12 @@ const LearnerSubmissions = [
   },
 ];
 
-function grabImportantAssignmentInfo() {
+function grabImportantAssignmentInfo(assignementInfo) {
   let ids = [];
   let possiblePoints = [];
   let dueDates = [];
 
-  AssignmentGroup.assignments.forEach((el) => {
+  assignementInfo.assignments.forEach((el) => {
     // console.log(el);
     ids.push(el.id);
     possiblePoints.push(el.points_possible);
@@ -145,11 +145,11 @@ const findAssignment = (assignementInfo, id, submitted) => {
       if (dueDate < Date.now()) {
         if (submitted > dueDate) {
           //Assignment submitted late
-          console.log("late");
+          console.log("Late");
           return [assignementInfo[1][i], "Late"];
         } else {
           //Assignemnt submitteed ontime
-          console.log("Ontime");
+          console.log("On Time");
           return [assignementInfo[1][i], "On Time"];
         }
       }
@@ -157,13 +157,13 @@ const findAssignment = (assignementInfo, id, submitted) => {
   }
   //Assignment is not due yet
   //   console.log("Not due");
-  return "Not Due";
+  return -1;
 };
 
 const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
   let studentClassScores = [];
 
-  let assignementInfo = grabImportantAssignmentInfo();
+  let assignementInfo = grabImportantAssignmentInfo(AssignmentGroup);
 
   for (let i = 0; i < LearnerSubmissions.length; i++) {
     let student = {};
@@ -184,17 +184,21 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
       );
       console.log("assignment return", assignment);
 
-      if (assignment == "Not Due") {
+      if (assignment == -1) {
         //Assignment is not due yet, ignore it
       } else {
         //The assignment is due, see if its on time
+        if (assignment[1] == "Late") {
+        } else {
+        }
+
         studentClassScores[spot].possiblePoints += assignment[0];
+        studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
+          LearnerSubmissions[i].submission.score;
+
+        studentClassScores[spot].scored +=
+          LearnerSubmissions[i].submission.score;
       }
-
-      studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
-        LearnerSubmissions[i].submission.score;
-
-      studentClassScores[spot].scored += LearnerSubmissions[i].submission.score;
     } else {
       // console.log("Found nothing");
       // New Learner
@@ -207,20 +211,24 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
       );
       console.log("assignment return", assignment);
 
-      if (assignment == "Not Due") {
+      if (assignment == -1) {
         //Assignment is not due yet, ignore it
       } else {
         //The assignment is due, see if its on time
+        //add to student array result
+
+        if (assignment[1] == "Late") {
+        } else {
+        }
+
+        student[LearnerSubmissions[i].assignment_id] =
+          LearnerSubmissions[i].submission.score;
+
+        student.scored = LearnerSubmissions[i].submission.score;
+
+        studentClassScores.push(student);
         student.possiblePoints = assignment[0];
       }
-
-      //add to student array result
-      student[LearnerSubmissions[i].assignment_id] =
-        LearnerSubmissions[i].submission.score;
-
-      student.scored = LearnerSubmissions[i].submission.score;
-
-      studentClassScores.push(student);
     }
   }
 
