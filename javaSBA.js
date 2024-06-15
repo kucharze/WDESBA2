@@ -112,7 +112,8 @@ function grabImportantAssignmentInfo() {
   let dueDates = [];
 
   AssignmentGroup.assignments.forEach((el) => {
-    id.push(el.id);
+    // console.log(el);
+    ids.push(el.id);
     possiblePoints.push(el.points_possible);
     dueDates.push(el.due_at);
   });
@@ -133,7 +134,7 @@ let assignementInfo = grabImportantAssignmentInfo();
 
 for (let i = 0; i < LearnerSubmissions.length; i++) {
   let student = {};
-  student.id = LearnerSubmissions[i].id;
+  student.id = LearnerSubmissions[i].learner_id;
   student[LearnerSubmissions[i].assignment_id] =
     LearnerSubmissions[i].submission.score;
 
