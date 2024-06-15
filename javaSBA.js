@@ -1,4 +1,3 @@
-// let objs = [
 //   {
 //     id: number,
 //     name: string,
@@ -28,40 +27,81 @@
 //       score: number,
 //     },
 //   },
-// ];
 
-let objs = [
+// The provided course information.
+const CourseInfo = {
+  id: 451,
+  name: "Introduction to JavaScript",
+};
+
+// The provided assignment group.
+const AssignmentGroup = {
+  id: 12345,
+  name: "Fundamentals of JavaScript",
+  course_id: 451,
+  group_weight: 25,
+  assignments: [
+    {
+      id: 1,
+      name: "Declare a Variable",
+      due_at: "2023-01-25",
+      points_possible: 50,
+    },
+    {
+      id: 2,
+      name: "Write a Function",
+      due_at: "2023-02-27",
+      points_possible: 150,
+    },
+    {
+      id: 3,
+      name: "Code the World",
+      due_at: "3156-11-15",
+      points_possible: 500,
+    },
+  ],
+};
+
+// The provided learner submission data.
+const LearnerSubmissions = [
   {
-    //Course Info
-    id: 100,
-    name: "Zack",
-  },
-  {
-    //AssignmentInfo
-    id: 101,
-    name: "Joe",
-    // the ID of the course the assignment group belongs to
-    course_id: number,
-    // the percentage weight of the entire assignment group
-    group_weight: number,
-    assignments: [AssignmentInfo],
-  },
-  {
-    //Assignment Info
-    id: 95,
-    name: "Chris",
-    // the due date for the assignment
-    due_at: "12-24-2023", //date string
-    // the maximum points possible for the assignment
-    points_possible: 100,
-  },
-  {
-    //LearnerSubmission
-    learner_id: 4050,
-    assignment_id: 1000,
+    learner_id: 125,
+    assignment_id: 1,
     submission: {
-      submitted_at: "12-24-2023",
-      score: 50,
+      submitted_at: "2023-01-25",
+      score: 47,
+    },
+  },
+  {
+    learner_id: 125,
+    assignment_id: 2,
+    submission: {
+      submitted_at: "2023-02-12",
+      score: 150,
+    },
+  },
+  {
+    learner_id: 125,
+    assignment_id: 3,
+    submission: {
+      submitted_at: "2023-01-25",
+      score: 400,
+    },
+  },
+  {
+    learner_id: 132,
+    assignment_id: 1,
+    submission: {
+      submitted_at: "2023-01-24",
+      score: 39,
+    },
+  },
+  {
+    learner_id: 132,
+    assignment_id: 2,
+    submission: {
+      submitted_at: "2023-03-07",
+      score: 140,
     },
   },
 ];
