@@ -130,8 +130,9 @@ function grabImportantAssignmentInfo() {
 //The final set of score results
 
 function checkContainment(scores, id) {
+  //   console.log("Checking containment");
   for (let i = 0; i < scores.length; i++) {
-    if (scores.id === id) {
+    if (scores[i].id == id) {
       return i;
     }
   }
@@ -146,11 +147,20 @@ let assignementInfo = grabImportantAssignmentInfo();
 for (let i = 0; i < LearnerSubmissions.length; i++) {
   let student = {};
 
-  student.id = LearnerSubmissions[i].learner_id;
-  student[LearnerSubmissions[i].assignment_id] =
-    LearnerSubmissions[i].submission.score;
+  let spot = checkContainment(
+    studentClassScores,
+    LearnerSubmissions[i].learner_id
+  );
 
-  studentClassScores.push(student);
+  if (spot !== -1) {
+  } else {
+    console.log("Found nothing");
+    student.id = LearnerSubmissions[i].learner_id;
+    student[LearnerSubmissions[i].assignment_id] =
+      LearnerSubmissions[i].submission.score;
+
+    studentClassScores.push(student);
+  }
 }
 
 console.log(studentClassScores);
