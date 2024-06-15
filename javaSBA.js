@@ -106,20 +106,18 @@ const LearnerSubmissions = [
   },
 ];
 
-function getPossiblePoints() {
+function grabImportantAssignmentInfo() {
   let possiblePoints = [];
+  let dueDates = [];
 
   AssignmentGroup.assignments.forEach((el) => {
-    possiblePoints.push(possiblePoints);
+    possiblePoints.push(el.points_possible);
+    dueDates.push(el.due_at);
   });
 
-  return possiblePoints;
+  return [possiblePoints, dueDates];
 }
 
 function grabLearnerScores() {
   let scores = [];
-}
-
-function grabDueDates() {
-  let dueDates = [];
 }
