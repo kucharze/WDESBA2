@@ -121,14 +121,6 @@ function grabImportantAssignmentInfo() {
   return [ids, possiblePoints, dueDates];
 }
 
-// function grabLearnerScores() {
-//   let scores = [];
-
-//   LearnerSubmissions.forEach((element) => {});
-// }
-
-//The final set of score results
-
 function checkContainment(scores, id) {
   //   console.log("Checking containment");
   for (let i = 0; i < scores.length; i++) {
@@ -139,6 +131,14 @@ function checkContainment(scores, id) {
 
   return -1;
 }
+
+const calculateScores = (score, total, assignmentID) => {
+  let i = 0;
+
+  return score / total;
+};
+
+const findAssignment = (assignementInfo) => {};
 
 let studentClassScores = [];
 
