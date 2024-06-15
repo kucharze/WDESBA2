@@ -105,3 +105,11 @@ const LearnerSubmissions = [
     },
   },
 ];
+
+function getAllPoints() {
+  let possiblePoints = [];
+}
+
+function grabScores() {
+  let scores = [];
+}
