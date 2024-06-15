@@ -132,13 +132,20 @@ function checkContainment(scores, id) {
   return -1;
 }
 
-const calculateScores = (score, total, assignmentID) => {
+const calculateScores = (score, total) => {
   let i = 0;
 
   return score / total;
 };
 
-const findAssignment = (assignementInfo) => {};
+const findAssignment = (assignementInfo, id) => {
+  for (let i = 0; i < assignementInfo[0].length; i++) {
+    if (assignementInfo[0][i] == id) {
+      if (new Date(assignementInfo[2][i]) < Date.now()) {
+      }
+    }
+  }
+};
 
 let studentClassScores = [];
 
@@ -158,6 +165,8 @@ for (let i = 0; i < LearnerSubmissions.length; i++) {
 
     studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
       LearnerSubmissions[i].submission.score;
+
+    studentClassScores[spot].scored += LearnerSubmissions[i].submission.score;
   } else {
     // console.log("Found nothing");
 
@@ -165,9 +174,13 @@ for (let i = 0; i < LearnerSubmissions.length; i++) {
     student[LearnerSubmissions[i].assignment_id] =
       LearnerSubmissions[i].submission.score;
 
+    student.scored = LearnerSubmissions[i].submission.score;
+
     studentClassScores.push(student);
   }
 }
+
+findAssignment(assignementInfo);
 
 console.log(studentClassScores);
 // let d = new Date(AssignmentGroup.assignments[0].due_at);
