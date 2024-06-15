@@ -145,11 +145,11 @@ const findAssignment = (assignementInfo, id, submitted) => {
       if (dueDate < Date.now()) {
         if (submitted > dueDate) {
           //Assignment submitted late
-          console.log("Late");
+          //   console.log("Late");
           return [assignementInfo[1][i], "Late"];
         } else {
           //Assignemnt submitteed ontime
-          console.log("On Time");
+          //   console.log("On Time");
           return [assignementInfo[1][i], "On Time"];
         }
       }
@@ -184,9 +184,7 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
       );
       console.log("assignment return", assignment);
 
-      if (assignment == -1) {
-        //Assignment is not due yet, ignore it
-      } else {
+      if (assignment !== -1) {
         //The assignment is due, see if its on time
         studentClassScores[spot].possiblePoints += assignment[0];
         if (assignment[1] == "Late") {
@@ -215,9 +213,7 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
       );
       console.log("assignment return", assignment);
 
-      if (assignment == -1) {
-        //Assignment is not due yet, ignore it
-      } else {
+      if (assignment != -1) {
         //The assignment is due, see if its on time
         //add to student array result
 
@@ -240,7 +236,7 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
     }
   }
 
-  console.log(findAssignment(assignementInfo, 2, new Date("2023-03-01")));
+  //   console.log(findAssignment(assignementInfo, 2, new Date("2023-03-01")));
 
   // console.log(studentClassScores);
   // let d = new Date(AssignmentGroup.assignments[0].due_at);
