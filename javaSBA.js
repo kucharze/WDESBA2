@@ -192,8 +192,7 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
       );
 
       if (spot !== -1) {
-        // console.log("New assignment");
-        // console.log(LearnerSubmissions[i].assignment_id);
+        // "New assignment"
 
         let assignment = findAssignment(
           assignementInfo,
@@ -230,7 +229,6 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
           // );
         }
       } else {
-        // console.log("Found nothing");
         // New Learner
 
         student.id = LearnerSubmissions[i].learner_id;
