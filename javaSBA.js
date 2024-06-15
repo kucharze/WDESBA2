@@ -200,6 +200,8 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
           studentClassScores[spot].scored +=
             LearnerSubmissions[i].submission.score;
         }
+        studentClassScores[spot][LearnerSubmissions[i].assignment_id] /=
+          assignment[0];
       }
     } else {
       // console.log("Found nothing");
@@ -230,6 +232,8 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
           student.scored = LearnerSubmissions[i].submission.score;
           student.possiblePoints = assignment[0];
         }
+
+        student[LearnerSubmissions[i].assignment_id] /= assignment[0];
 
         studentClassScores.push(student);
       }
