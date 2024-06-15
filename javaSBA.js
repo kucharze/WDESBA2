@@ -200,7 +200,7 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
           LearnerSubmissions[i].assignment_id,
           new Date(LearnerSubmissions[i].submission.submitted_at)
         );
-        console.log("assignment return", assignment);
+        // console.log("assignment return", assignment);
 
         if (assignment == -1) {
           throw new Error("Assignment not found");
@@ -241,7 +241,7 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
           LearnerSubmissions[i].assignment_id,
           new Date(LearnerSubmissions[i].submission.submitted_at)
         );
-        console.log("assignment return", assignment);
+        // console.log("assignment return", assignment);
 
         if (assignment == -1) {
           throw new Error("Assignment not found");
