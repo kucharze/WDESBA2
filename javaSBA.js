@@ -120,13 +120,18 @@ function grabImportantAssignmentInfo() {
   return [ids, possiblePoints, dueDates];
 }
 
-function grabLearnerScores() {
-  let scores = [];
+// function grabLearnerScores() {
+//   let scores = [];
 
-  LearnerSubmissions.forEach((element) => {});
-}
+//   LearnerSubmissions.forEach((element) => {});
+// }
 
 //The final set of score results
 let studentClassScores = [];
 
 let assignementInfo = getImportantAssignmentInfo();
+
+for (let i = 0; i < LearnerSubmissions.length; i++) {
+  let student = {};
+  student.id = el.id;
+}
