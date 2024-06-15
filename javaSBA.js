@@ -153,16 +153,13 @@ for (let i = 0; i < LearnerSubmissions.length; i++) {
   );
 
   if (spot !== -1) {
-    console.log("New assignment");
-    console.log(LearnerSubmissions[i]);
-    console.log(LearnerSubmissions[i].assignment_id);
+    // console.log("New assignment");
+    // console.log(LearnerSubmissions[i].assignment_id);
 
     studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
       LearnerSubmissions[i].submission.score;
-
-    console.log(studentClassScores);
   } else {
-    console.log("Found nothing");
+    // console.log("Found nothing");
 
     student.id = LearnerSubmissions[i].learner_id;
     student[LearnerSubmissions[i].assignment_id] =
@@ -173,3 +170,5 @@ for (let i = 0; i < LearnerSubmissions.length; i++) {
 }
 
 console.log(studentClassScores);
+// let d = new Date(AssignmentGroup.assignments[0].due_at);
+// console.log(d);
