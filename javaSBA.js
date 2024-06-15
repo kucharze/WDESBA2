@@ -132,10 +132,6 @@ function checkContainment(scores, id) {
   return -1;
 }
 
-const calculateScores = (score, total) => {
-  return score / total;
-};
-
 const findAssignment = (assignementInfo, id, submitted) => {
   for (let i = 0; i < assignementInfo[0].length; i++) {
     if (assignementInfo[0][i] == id) {
@@ -158,6 +154,10 @@ const findAssignment = (assignementInfo, id, submitted) => {
   //Assignment is not due yet
   //   console.log("Not due");
   return -1;
+};
+
+const calculateAverageScore = (student) => {
+  return 0;
 };
 
 const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
