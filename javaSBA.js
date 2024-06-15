@@ -114,6 +114,11 @@ function grabImportantAssignmentInfo(assignementInfo) {
   assignementInfo.assignments.forEach((el) => {
     // console.log(el);
     ids.push(el.id);
+    if (el.points_possible <= 0) {
+      throw new Error(
+        "A value less than or equal to 0 was detected for a possible point value"
+      );
+    }
     possiblePoints.push(el.points_possible);
     dueDates.push(el.due_at);
   });
@@ -163,90 +168,100 @@ const calculateAverageScore = (student) => {
 const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
   let studentClassScores = [];
 
-  let assignementInfo = grabImportantAssignmentInfo(AssignmentGroup);
+  try {
+    let assignementInfo = grabImportantAssignmentInfo(AssignmentGroup);
 
-  for (let i = 0; i < LearnerSubmissions.length; i++) {
-    let student = {};
+    for (let i = 0; i < LearnerSubmissions.length; i++) {
+      let student = {};
 
-    let spot = checkContainment(
-      studentClassScores,
-      LearnerSubmissions[i].learner_id
-    );
-
-    if (spot !== -1) {
-      // console.log("New assignment");
-      // console.log(LearnerSubmissions[i].assignment_id);
-
-      let assignment = findAssignment(
-        assignementInfo,
-        LearnerSubmissions[i].assignment_id,
-        new Date(LearnerSubmissions[i].submission.submitted_at)
+      let spot = checkContainment(
+        studentClassScores,
+        LearnerSubmissions[i].learner_id
       );
-      console.log("assignment return", assignment);
 
-      if (assignment !== -1) {
-        //The assignment is due, see if its on time
-        studentClassScores[spot].possiblePoints += assignment[0];
-        if (assignment[1] == "Late") {
-          studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
-            LearnerSubmissions[i].submission.score - 15;
+      if (spot !== -1) {
+        // console.log("New assignment");
+        // console.log(LearnerSubmissions[i].assignment_id);
 
-          studentClassScores[spot].scored +=
-            LearnerSubmissions[i].submission.score - 15;
-        } else {
-          studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
-            LearnerSubmissions[i].submission.score;
+        let assignment = findAssignment(
+          assignementInfo,
+          LearnerSubmissions[i].assignment_id,
+          new Date(LearnerSubmissions[i].submission.submitted_at)
+        );
+        console.log("assignment return", assignment);
 
-          studentClassScores[spot].scored +=
-            LearnerSubmissions[i].submission.score;
+        if (assignment !== -1) {
+          //The assignment is due, see if its on time
+          studentClassScores[spot].possiblePoints += assignment[0];
+          if (assignment[1] == "Late") {
+            studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
+              LearnerSubmissions[i].submission.score - 15;
+
+            studentClassScores[spot].scored +=
+              LearnerSubmissions[i].submission.score - 15;
+          } else {
+            studentClassScores[spot][LearnerSubmissions[i].assignment_id] =
+              LearnerSubmissions[i].submission.score;
+
+            studentClassScores[spot].scored +=
+              LearnerSubmissions[i].submission.score;
+          }
+          studentClassScores[spot][LearnerSubmissions[i].assignment_id] /=
+            assignment[0];
+
+          // Math.round(
+          studentClassScores[spot][LearnerSubmissions[i].assignment_id].toFixed(
+            2
+          );
+          // );
         }
-        studentClassScores[spot][LearnerSubmissions[i].assignment_id] /=
-          assignment[0];
-      }
-    } else {
-      // console.log("Found nothing");
-      // New Learner
+      } else {
+        // console.log("Found nothing");
+        // New Learner
 
-      student.id = LearnerSubmissions[i].learner_id;
-      let assignment = findAssignment(
-        assignementInfo,
-        LearnerSubmissions[i].assignment_id,
-        new Date(LearnerSubmissions[i].submission.submitted_at)
-      );
-      console.log("assignment return", assignment);
+        student.id = LearnerSubmissions[i].learner_id;
+        let assignment = findAssignment(
+          assignementInfo,
+          LearnerSubmissions[i].assignment_id,
+          new Date(LearnerSubmissions[i].submission.submitted_at)
+        );
+        console.log("assignment return", assignment);
 
-      if (assignment != -1) {
-        //The assignment is due, see if its on time
-        //add to student array result
+        if (assignment != -1) {
+          //The assignment is due, see if its on time
+          //add to student array result
 
-        if (assignment[1] == "Late") {
-          student[LearnerSubmissions[i].assignment_id] =
-            LearnerSubmissions[i].submission.score - 15;
+          if (assignment[1] == "Late") {
+            student[LearnerSubmissions[i].assignment_id] =
+              LearnerSubmissions[i].submission.score - 15;
 
-          student.scored = LearnerSubmissions[i].submission.score - 15;
-          student.possiblePoints = assignment[0];
-        } else {
-          student[LearnerSubmissions[i].assignment_id] =
-            LearnerSubmissions[i].submission.score;
+            student.scored = LearnerSubmissions[i].submission.score - 15;
+            student.possiblePoints = assignment[0];
+          } else {
+            student[LearnerSubmissions[i].assignment_id] =
+              LearnerSubmissions[i].submission.score;
 
-          student.scored = LearnerSubmissions[i].submission.score;
-          student.possiblePoints = assignment[0];
+            student.scored = LearnerSubmissions[i].submission.score;
+            student.possiblePoints = assignment[0];
+          }
+
+          student[LearnerSubmissions[i].assignment_id] /= assignment[0];
+
+          studentClassScores.push(student);
         }
-
-        student[LearnerSubmissions[i].assignment_id] /= assignment[0];
-
-        studentClassScores.push(student);
       }
     }
+
+    //   console.log(findAssignment(assignementInfo, 2, new Date("2023-03-01")));
+
+    // console.log(studentClassScores);
+    // let d = new Date(AssignmentGroup.assignments[0].due_at);
+    // console.log(d);
+
+    return studentClassScores;
+  } catch (error) {
+    console.log("An error occured", error);
   }
-
-  //   console.log(findAssignment(assignementInfo, 2, new Date("2023-03-01")));
-
-  // console.log(studentClassScores);
-  // let d = new Date(AssignmentGroup.assignments[0].due_at);
-  // console.log(d);
-
-  return studentClassScores;
 };
 
 console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions));
