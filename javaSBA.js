@@ -162,6 +162,11 @@ const findAssignment = (assignementInfo, id, submitted) => {
 };
 
 const calculateAverageScore = (student) => {
+  student.forEach((el) => {
+    el.avg = el.scored / el.possiblePoints;
+    delete el.scored;
+    delete el.possiblePoints;
+  });
   return 0;
 };
 
@@ -254,6 +259,8 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
         }
       }
     }
+
+    calculateAverageScore(studentClassScores);
 
     //   console.log(findAssignment(assignementInfo, 2, new Date("2023-03-01")));
 
